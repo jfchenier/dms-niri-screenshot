@@ -1,0 +1,16 @@
+{
+    "id": "dms-niri-screenshot",
+    "name": "Niri Screenshot",
+    "description": "Control Niri screenshot actions from the Control Center",
+    "version": "1.0.0",
+    "author": "Antigravity",
+    "icon": "camera_enhance",
+    "type": "widget",
+    "component": "./ScreenshotWidget.qml",
+    "settings": "./Settings.qml",
+    "permissions": [
+        "process",
+        "settings_read",
+        "settings_write"
+    ]
+}

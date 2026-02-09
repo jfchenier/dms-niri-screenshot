@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Reload Plugin",
+            "type": "shell",
+            "command": "dms ipc call plugins reload dms-niri-screenshot",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Watch DMS Logs",
+            "type": "shell",
+            "command": "journalctl -f | grep dms",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ]
+}

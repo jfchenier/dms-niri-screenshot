@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Reload Plugin",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "dms",
+            "runtimeArgs": [
+                "ipc",
+                "call",
+                "plugins",
+                "reload",
+                "dms-niri-screenshot"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"]
+        }
+    ]
+}
