@@ -14,7 +14,6 @@ PluginComponent {
     property string mode: pluginData.mode || "interactive"
     property bool showPointer: pluginData.showPointer !== undefined ? pluginData.showPointer : true
     property bool saveToDisk: pluginData.saveToDisk !== undefined ? pluginData.saveToDisk : true
-    property string customPath: pluginData.customPath || ""
 
     // -- Internal ----------------------------------------------------------------------
     property bool isTakingScreenshot: false
@@ -72,10 +71,6 @@ PluginComponent {
             }
         }
 
-        if (root.customPath && root.customPath.trim() !== "") {
-            niriArgs.push("--path");
-            niriArgs.push(root.customPath.trim());
-        }
 
         // Construct the full command string for sh -c
         // We use a small sleep to allow the UI to close
@@ -149,14 +144,12 @@ PluginComponent {
                         mode: root.mode
                         showPointer: root.showPointer
                         saveToDisk: root.saveToDisk
-                        customPath: root.customPath
                         pluginId: pluginId
                         onSaveSetting: (key, value) => {
                             // Optimistic UI Update
                             if (key === "mode") root.mode = value;
                             if (key === "showPointer") root.showPointer = value;
                             if (key === "saveToDisk") root.saveToDisk = value;
-                            if (key === "customPath") root.customPath = value;
 
                             try {
                                 if (typeof PluginService !== "undefined" && PluginService) {
@@ -207,14 +200,12 @@ PluginComponent {
                     mode: root.mode
                     showPointer: root.showPointer
                     saveToDisk: root.saveToDisk
-                    customPath: root.customPath
                     pluginId: pluginId
                     onSaveSetting: (key, value) => {
                         // Optimistic UI Update
                         if (key === "mode") root.mode = value;
                         if (key === "showPointer") root.showPointer = value;
                         if (key === "saveToDisk") root.saveToDisk = value;
-                        if (key === "customPath") root.customPath = value;
 
                         try {
                             if (typeof PluginService !== "undefined" && PluginService) {

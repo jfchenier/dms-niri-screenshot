@@ -11,10 +11,8 @@ Column {
     property string mode: "interactive"
     property bool showPointer: true
     property bool saveToDisk: true
-    property string customPath: ""
     property string pluginId: ""
     signal saveSetting(string key, var value)
-
 
 
     // Mode Selection
@@ -192,63 +190,4 @@ Column {
             }
         }
     } 
-    
-    // Custom Path
-    StyledRect {
-        width: parent.width
-        height: pathColumnCC.implicitHeight + Theme.spacingM * 2
-        radius: Theme.cornerRadius
-        color: Theme.surfaceContainerHighest
-        
-        Column {
-            id: pathColumnCC
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.margins: Theme.spacingM
-            spacing: Theme.spacingS
-            
-            StyledText {
-                text: "Custom Path"
-                font.weight: Font.Bold
-                color: Theme.surfaceText
-            }
-            
-            Rectangle {
-                width: parent.width * 0.95
-                height: 40
-                color: Theme.background
-                radius: Theme.cornerRadius
-                border.color: pathInputCC.activeFocus ? Theme.primary : Theme.outline
-                border.width: 1
-                
-                TextInput {
-                    id: pathInputCC
-                    anchors.fill: parent
-                    anchors.margins: 8
-                    text: root.customPath
-                    color: Theme.surfaceText
-                    font.pixelSize: Theme.fontSizeMedium
-                    verticalAlignment: Text.AlignVCenter
-                    clip: true
-                    selectByMouse: true
-                    
-                    // Placeholder
-                    Text {
-                        text: "Default path..."
-                        color: Theme.surfaceVariantText
-                        visible: !parent.text && !parent.activeFocus
-                        anchors.fill: parent
-                        verticalAlignment: Text.AlignVCenter
-                        font.pixelSize: Theme.fontSizeMedium
-                        leftPadding: 8
-                    }
-
-                    onEditingFinished: {
-                        root.saveSetting("customPath", text);
-                    }
-                }
-            }
-        }
-    }
 }
