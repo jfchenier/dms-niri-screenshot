@@ -196,8 +196,8 @@ PluginComponent {
                     height: 36
                     iconName: "camera_enhance"
                     onClicked: {
+                        root.closePopout();
                         root.takeScreenshot();
-                        // Optional: PopoutService.closePopout(pluginId);
                     }
                 }
 
