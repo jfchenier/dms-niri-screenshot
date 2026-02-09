@@ -238,8 +238,8 @@ PluginComponent {
             spacing: Theme.spacingS
             DankIcon {
                 name: "camera_enhance"
-                size: Theme.iconSize - 4
-                color: Theme.primary
+                size: Theme.barIconSize(root.barThickness, -4)
+                color: Theme.widgetIconColor
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
@@ -250,8 +250,8 @@ PluginComponent {
             spacing: Theme.spacingXS
             DankIcon {
                 name: "camera_enhance"
-                size: Theme.iconSize - 4
-                color: Theme.primary
+                size: Theme.barIconSize(root.barThickness, -4)
+                color: Theme.widgetIconColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
