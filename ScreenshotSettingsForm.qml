@@ -13,7 +13,6 @@ Column {
 
     property string mode: "interactive"
     property bool showPointer: true
-    property bool saveToDisk: true
 
     signal saveSetting(string key, var value)
 
@@ -27,7 +26,6 @@ Column {
     Component.onCompleted: {
         root.mode = loadSetting("mode", "interactive");
         root.showPointer = loadSetting("showPointer", true);
-        root.saveToDisk = loadSetting("saveToDisk", true);
     }
 
     // Mode Selection
@@ -169,43 +167,6 @@ Column {
                 }
             }
 
-            // Save to Disk
-            Rectangle {
-                width: parent.width
-                height: 40
-                color: "transparent"
-                
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.leftMargin: Theme.spacingS
-                    spacing: Theme.spacingM
-                    
-                    DankIcon {
-                        name: root.saveToDisk ? "check_box" : "check_box_outline_blank"
-                        color: root.saveToDisk ? Theme.primary : Theme.surfaceVariantText
-                        size: Theme.iconSize
-                        Layout.alignment: Qt.AlignVCenter
-                    }
-                    
-                    StyledText {
-                        text: "Save to Disk"
-                        color: Theme.surfaceText
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.fillWidth: true
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                }
-                
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    preventStealing: true
-                    onClicked: {
-                        root.saveSetting("saveToDisk", !root.saveToDisk);
-                        root.saveToDisk = !root.saveToDisk;
-                    }
-                }
-            }
         }
     } 
 }

@@ -13,7 +13,6 @@ PluginComponent {
     // -- Settings ----------------------------------------------------------------------
     property string mode: pluginData.mode || "interactive"
     property bool showPointer: pluginData.showPointer !== undefined ? pluginData.showPointer : true
-    property bool saveToDisk: pluginData.saveToDisk !== undefined ? pluginData.saveToDisk : true
 
     // -- Internal ----------------------------------------------------------------------
     property bool isTakingScreenshot: false
@@ -60,16 +59,10 @@ PluginComponent {
         }
 
         if (root.mode !== "window") {
-             if (!root.showPointer) {
-                niriArgs.push("--show-pointer=false");
-            }
+            // screenshot and screenshot-screen support --show-pointer
+            niriArgs.push("--show-pointer", root.showPointer ? "true" : "false");
         }
 
-        if (root.mode !== "interactive") {
-            if (!root.saveToDisk) {
-                niriArgs.push("--write-to-disk=false"); 
-            }
-        }
 
 
         // Construct the full command string for sh -c
@@ -142,7 +135,6 @@ PluginComponent {
                             // Optimistic UI Update
                             if (key === "mode") root.mode = value;
                             if (key === "showPointer") root.showPointer = value;
-                            if (key === "saveToDisk") root.saveToDisk = value;
 
                             try {
                                 if (typeof PluginService !== "undefined" && PluginService) {
@@ -196,7 +188,6 @@ PluginComponent {
                         // Optimistic UI Update
                         if (key === "mode") root.mode = value;
                         if (key === "showPointer") root.showPointer = value;
-                        if (key === "saveToDisk") root.saveToDisk = value;
 
                         try {
                             if (typeof PluginService !== "undefined" && PluginService) {

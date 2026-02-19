@@ -11,7 +11,6 @@ A [DMS (Dank Material Shell)](https://github.com/nicknisi/dank-material-shell) p
 
 - **Options**
   - **Show Pointer** — include or hide the mouse cursor in screenshots
-  - **Save to Disk** — toggle whether screenshots are saved to a file
   - **Custom Path** — optionally set an absolute path for saving screenshots
 
 - **Control Center Integration** — quick access tile with a detail panel for settings

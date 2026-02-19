@@ -41,13 +41,6 @@ PluginSettings {
         description: "Include mouse pointer in the screenshot"
         defaultValue: true
     }
-
-    ToggleSetting {
-        settingKey: "saveToDisk"
-        label: "Save to Disk"
-        description: "Save the screenshot to a file"
-        defaultValue: true
-    }
     
     StringSetting {
         settingKey: "customPath"
