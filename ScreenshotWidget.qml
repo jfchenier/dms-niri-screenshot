@@ -86,8 +86,6 @@ PluginComponent {
         ToastService.showInfo("Screenshot", "Screenshot triggered");
     }
 
-    // Required by PluginComponent, though we are mainly a CC widget.
-
 
     // -- CC Detail Settings -------------------------------------------------------------
     ccDetailContent: Component {
@@ -133,17 +131,12 @@ PluginComponent {
                 anchors.margins: Theme.spacingM
                 contentHeight: settingsColumnCC.height
                 clip: true
-                    
-                    // Settings Content
-                    // Settings Content
-                    // Settings Content
+
                     ScreenshotSettingsForm {
                         id: settingsColumnCC
                         width: parent.width
                         
-                        mode: root.mode
-                        showPointer: root.showPointer
-                        saveToDisk: root.saveToDisk
+                        pluginService: PluginService
                         pluginId: pluginId
                         onSaveSetting: (key, value) => {
                             // Optimistic UI Update
@@ -197,9 +190,7 @@ PluginComponent {
                 ScreenshotSettingsForm {
                     width: parent.width
                     
-                    mode: root.mode
-                    showPointer: root.showPointer
-                    saveToDisk: root.saveToDisk
+                    pluginService: PluginService
                     pluginId: pluginId
                     onSaveSetting: (key, value) => {
                         // Optimistic UI Update

@@ -8,12 +8,27 @@ Column {
     id: root
     spacing: Theme.spacingM
 
+    property var pluginService
+    property string pluginId: ""
+
     property string mode: "interactive"
     property bool showPointer: true
     property bool saveToDisk: true
-    property string pluginId: ""
+
     signal saveSetting(string key, var value)
 
+    function loadSetting(key, defaultValue) {
+        if (pluginService) {
+            return pluginService.loadPluginData("dms-niri-screenshot", key, defaultValue);
+        }
+        return defaultValue;
+    }
+
+    Component.onCompleted: {
+        root.mode = loadSetting("mode", "interactive");
+        root.showPointer = loadSetting("showPointer", true);
+        root.saveToDisk = loadSetting("saveToDisk", true);
+    }
 
     // Mode Selection
     StyledRect {
@@ -87,6 +102,7 @@ Column {
                         preventStealing: true
                         onClicked: {
                             root.saveSetting("mode", modelData.value);
+                            root.mode = modelData.value;
                         }
                     }
                 }
@@ -148,6 +164,7 @@ Column {
                     preventStealing: true
                     onClicked: {
                         root.saveSetting("showPointer", !root.showPointer);
+                        root.showPointer = !root.showPointer;
                     }
                 }
             }
@@ -185,6 +202,7 @@ Column {
                     preventStealing: true
                     onClicked: {
                         root.saveSetting("saveToDisk", !root.saveToDisk);
+                        root.saveToDisk = !root.saveToDisk;
                     }
                 }
             }
