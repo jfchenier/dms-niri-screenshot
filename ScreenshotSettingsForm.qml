@@ -15,6 +15,7 @@ Column {
     property bool showPointer: true
     property bool saveToDisk: true
     property string customPath: ""
+    property string niriDefaultPath: ""
 
     signal saveSetting(string key, var value)
 
@@ -249,7 +250,7 @@ Column {
                     width: parent.width
                     height: 40
                     text: root.customPath
-                    placeholderText: "/home/user/Pictures/screenshot.png"
+                    placeholderText: root.niriDefaultPath
                     backgroundColor: Theme.surfaceContainer
                     textColor: Theme.surfaceText
 

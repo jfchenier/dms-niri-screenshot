@@ -1,11 +1,29 @@
 import QtQuick
+import Quickshell
+import Quickshell.Io
 import qs.Common
 import qs.Modules.Plugins
 import qs.Widgets
+import QtCore
 
 PluginSettings {
     id: root
     pluginId: "dms-niri-screenshot"
+
+    property string niriDefaultPath: ""
+
+    Process {
+        id: defaultPathDetector
+        command: ["sh", "-c", "file=$(grep -oP '(?<=screenshot-path \\\")[^\\\"]+' \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/config.kdl\" 2>/dev/null); if [ -n \"$file\" ]; then echo \"${file/#$HOME/~}\"; else dir=$(xdg-user-dir PICTURES 2>/dev/null); if [ -n \"$dir\" ]; then echo \"${dir/#$HOME/~}/Screenshot %Y-%m-%d %H-%M-%S.png\"; else echo \"~/Pictures/Screenshot %Y-%m-%d %H-%M-%S.png\"; fi; fi"]
+        running: true
+        stdout: SplitParser {
+            onRead: function(data) {
+                if (data.trim() !== "") {
+                    root.niriDefaultPath = data.trim();
+                }
+            }
+        }
+    }
 
     StyledText {
         width: parent.width
@@ -54,7 +72,7 @@ PluginSettings {
         settingKey: "customPath"
         label: "Custom Path"
         description: "Absolute path to save screenshots. Can be a directory or a file path. Leave empty for default."
-        placeholder: "/home/user/Pictures/Screenshots/shot.png"
+        placeholder: root.niriDefaultPath
         defaultValue: ""
     }
 }

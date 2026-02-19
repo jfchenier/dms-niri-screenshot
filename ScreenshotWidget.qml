@@ -1,10 +1,12 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import qs.Common
 import qs.Services
 import qs.Widgets
 import qs.Modules.Plugins
 import QtQuick.Layouts
+import QtCore
 
 PluginComponent {
     id: root
@@ -18,6 +20,20 @@ PluginComponent {
 
     // -- Internal ----------------------------------------------------------------------
     property bool isTakingScreenshot: false
+    property string niriDefaultPath: ""
+
+    Process {
+        id: defaultPathDetector
+        command: ["sh", "-c", "file=$(grep -oP '(?<=screenshot-path \\\")[^\\\"]+' \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/config.kdl\" 2>/dev/null); if [ -n \"$file\" ]; then echo \"${file/#$HOME/~}\"; else dir=$(xdg-user-dir PICTURES 2>/dev/null); if [ -n \"$dir\" ]; then echo \"${dir/#$HOME/~}/Screenshot %Y-%m-%d %H-%M-%S.png\"; else echo \"~/Pictures/Screenshot %Y-%m-%d %H-%M-%S.png\"; fi; fi"]
+        running: true
+        stdout: SplitParser {
+            onRead: function(data) {
+                if (data.trim() !== "") {
+                    root.niriDefaultPath = data.trim();
+                }
+            }
+        }
+    }
 
     // Control Center Widget Properties
     ccWidgetIcon: "camera_enhance"
@@ -84,7 +100,7 @@ PluginComponent {
             // If path doesn't end with an image extension, treat as directory
             if (!savePath.match(/\.(png|jpe?g)$/i)) {
                 let now = new Date();
-                let pad = (n) => String(n).padStart(2, '0');
+                let pad = function(n) { return String(n).padStart(2, '0'); };
                 let ts = now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate())
                        + " " + pad(now.getHours()) + "-" + pad(now.getMinutes()) + "-" + pad(now.getSeconds());
                 if (!savePath.endsWith("/")) savePath += "/";
@@ -161,7 +177,8 @@ PluginComponent {
                         
                         pluginService: PluginService
                         pluginId: pluginId
-                        onSaveSetting: (key, value) => {
+                        niriDefaultPath: root.niriDefaultPath
+                        onSaveSetting: function(key, value) {
                             // Optimistic UI Update
                             if (key === "mode") root.mode = value;
                             if (key === "showPointer") root.showPointer = value;
@@ -216,7 +233,8 @@ PluginComponent {
                     
                     pluginService: PluginService
                     pluginId: pluginId
-                    onSaveSetting: (key, value) => {
+                    niriDefaultPath: root.niriDefaultPath
+                    onSaveSetting: function(key, value) {
                         // Optimistic UI Update
                         if (key === "mode") root.mode = value;
                         if (key === "showPointer") root.showPointer = value;
