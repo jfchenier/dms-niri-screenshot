@@ -48,6 +48,14 @@ PluginComponent {
         if (root.isTakingScreenshot) return;
         root.isTakingScreenshot = true;
 
+        // Reload settings from persistent storage to ensure we use the latest values
+        if (typeof PluginService !== "undefined" && PluginService) {
+            root.mode = PluginService.loadPluginData("dms-niri-screenshot", "mode", "interactive") || "interactive";
+            root.showPointer = PluginService.loadPluginData("dms-niri-screenshot", "showPointer", true);
+            root.saveToDisk = PluginService.loadPluginData("dms-niri-screenshot", "saveToDisk", true);
+            root.customPath = PluginService.loadPluginData("dms-niri-screenshot", "customPath", "") || "";
+        }
+
         let niriArgs = ["msg", "action"];
         
         // Base action
