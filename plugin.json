@@ -3,11 +3,27 @@
     "name": "Niri Screenshot",
     "description": "Control Niri screenshot actions from the Control Center",
     "version": "1.0.0",
-    "author": "Antigravity",
+    "author": "jfchenier",
     "icon": "camera_enhance",
     "type": "widget",
     "component": "./ScreenshotWidget.qml",
     "settings": "./Settings.qml",
+    "capabilities": [
+        "dankbar-widget",
+        "control-center"
+    ],
+    "category": "utilities",
+    "repo": "https://github.com/jfchenier/dms-niri-screenshot",
+    "compositors": [
+        "niri"
+    ],
+    "distro": [
+        "any"
+    ],
+    "dependencies": [
+        "niri"
+    ],
+    "screenshot": "https://raw.githubusercontent.com/jfchenier/dms-niri-screenshot/main/assets/screenshot-control-center.png",
     "permissions": [
         "process",
         "settings_read",
