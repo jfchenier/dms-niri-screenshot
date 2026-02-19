@@ -13,6 +13,7 @@ Column {
 
     property string mode: "interactive"
     property bool showPointer: true
+    property string customPath: ""
 
     signal saveSetting(string key, var value)
 
@@ -26,6 +27,7 @@ Column {
     Component.onCompleted: {
         root.mode = loadSetting("mode", "interactive");
         root.showPointer = loadSetting("showPointer", true);
+        root.customPath = loadSetting("customPath", "") || "";
     }
 
     // Mode Selection
@@ -164,6 +166,63 @@ Column {
                         root.saveSetting("showPointer", !root.showPointer);
                         root.showPointer = !root.showPointer;
                     }
+                }
+            }
+
+            // Custom Path
+            Column {
+                width: parent.width
+                spacing: Theme.spacingXS
+
+                Rectangle {
+                    width: parent.width
+                    height: 40
+                    color: "transparent"
+
+                    RowLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: Theme.spacingS
+                        spacing: Theme.spacingM
+
+                        DankIcon {
+                            name: "folder"
+                            color: Theme.surfaceVariantText
+                            size: Theme.iconSize
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        StyledText {
+                            text: "Custom Save Path"
+                            color: Theme.surfaceText
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.fillWidth: true
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                    }
+                }
+
+                DankTextField {
+                    id: customPathInput
+                    width: parent.width
+                    height: 40
+                    text: root.customPath
+                    placeholderText: "/home/user/Pictures/screenshot.png"
+                    backgroundColor: Theme.surfaceContainer
+                    textColor: Theme.surfaceText
+
+                    onTextEdited: {
+                        root.customPath = text.trim();
+                        root.saveSetting("customPath", root.customPath);
+                    }
+                }
+
+                StyledText {
+                    x: Theme.spacingS
+                    width: parent.width - Theme.spacingS
+                    text: "Leave empty for default. Use a directory or file path."
+                    color: Theme.surfaceVariantText
+                    font.pixelSize: Theme.fontSizeSmall
+                    wrapMode: Text.WordWrap
                 }
             }
 

@@ -43,9 +43,10 @@ PluginSettings {
     }
     
     StringSetting {
+        id: customPathSetting
         settingKey: "customPath"
         label: "Custom Path"
-        description: "Absolute path to save to (optional). Leave empty for default."
+        description: "Absolute path to save screenshots. Can be a directory or a file path. Leave empty for default."
         placeholder: "/home/user/Pictures/Screenshots/shot.png"
         defaultValue: ""
     }

@@ -13,6 +13,7 @@ PluginComponent {
     // -- Settings ----------------------------------------------------------------------
     property string mode: pluginData.mode || "interactive"
     property bool showPointer: pluginData.showPointer !== undefined ? pluginData.showPointer : true
+    property string customPath: pluginData.customPath || ""
 
     // -- Internal ----------------------------------------------------------------------
     property bool isTakingScreenshot: false
@@ -61,6 +62,21 @@ PluginComponent {
         if (root.mode !== "window") {
             // screenshot and screenshot-screen support --show-pointer
             niriArgs.push("--show-pointer", root.showPointer ? "true" : "false");
+        }
+
+        // Custom save path
+        if (root.customPath) {
+            let savePath = root.customPath;
+            // If path doesn't end with an image extension, treat as directory
+            if (!savePath.match(/\.(png|jpe?g)$/i)) {
+                let now = new Date();
+                let pad = (n) => String(n).padStart(2, '0');
+                let ts = now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate())
+                       + " " + pad(now.getHours()) + "-" + pad(now.getMinutes()) + "-" + pad(now.getSeconds());
+                if (!savePath.endsWith("/")) savePath += "/";
+                savePath += "Screenshot from " + ts + ".png";
+            }
+            niriArgs.push("--path", savePath);
         }
 
 
@@ -135,6 +151,7 @@ PluginComponent {
                             // Optimistic UI Update
                             if (key === "mode") root.mode = value;
                             if (key === "showPointer") root.showPointer = value;
+                            if (key === "customPath") root.customPath = value;
 
                             try {
                                 if (typeof PluginService !== "undefined" && PluginService) {
@@ -188,6 +205,7 @@ PluginComponent {
                         // Optimistic UI Update
                         if (key === "mode") root.mode = value;
                         if (key === "showPointer") root.showPointer = value;
+                        if (key === "customPath") root.customPath = value;
 
                         try {
                             if (typeof PluginService !== "undefined" && PluginService) {
