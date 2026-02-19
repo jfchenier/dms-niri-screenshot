@@ -13,6 +13,7 @@ Column {
 
     property string mode: "interactive"
     property bool showPointer: true
+    property bool saveToDisk: true
     property string customPath: ""
 
     signal saveSetting(string key, var value)
@@ -27,6 +28,7 @@ Column {
     Component.onCompleted: {
         root.mode = loadSetting("mode", "interactive");
         root.showPointer = loadSetting("showPointer", true);
+        root.saveToDisk = loadSetting("saveToDisk", true);
         root.customPath = loadSetting("customPath", "") || "";
     }
 
@@ -165,6 +167,47 @@ Column {
                     onClicked: {
                         root.saveSetting("showPointer", !root.showPointer);
                         root.showPointer = !root.showPointer;
+                    }
+                }
+            }
+
+            // Save to Disk
+            Rectangle {
+                property bool isInteractive: root.mode === "interactive"
+                width: parent.width
+                height: 40
+                color: "transparent"
+                opacity: isInteractive ? 0.4 : 1.0
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.leftMargin: Theme.spacingS
+                    spacing: Theme.spacingM
+
+                    DankIcon {
+                        name: (parent.parent.isInteractive || root.saveToDisk) ? "check_box" : "check_box_outline_blank"
+                        color: (parent.parent.isInteractive || root.saveToDisk) ? Theme.primary : Theme.surfaceVariantText
+                        size: Theme.iconSize
+                        Layout.alignment: Qt.AlignVCenter
+                    }
+
+                    StyledText {
+                        text: "Save to Disk"
+                        color: Theme.surfaceText
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.fillWidth: true
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: parent.isInteractive ? Qt.ArrowCursor : Qt.PointingHandCursor
+                    preventStealing: true
+                    enabled: !parent.isInteractive
+                    onClicked: {
+                        root.saveSetting("saveToDisk", !root.saveToDisk);
+                        root.saveToDisk = !root.saveToDisk;
                     }
                 }
             }

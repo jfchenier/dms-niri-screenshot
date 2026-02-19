@@ -13,6 +13,7 @@ PluginComponent {
     // -- Settings ----------------------------------------------------------------------
     property string mode: pluginData.mode || "interactive"
     property bool showPointer: pluginData.showPointer !== undefined ? pluginData.showPointer : true
+    property bool saveToDisk: pluginData.saveToDisk !== undefined ? pluginData.saveToDisk : true
     property string customPath: pluginData.customPath || ""
 
     // -- Internal ----------------------------------------------------------------------
@@ -64,8 +65,13 @@ PluginComponent {
             niriArgs.push("--show-pointer", root.showPointer ? "true" : "false");
         }
 
-        // Custom save path
-        if (root.customPath) {
+        // Write-to-disk (only for non-interactive modes)
+        if (root.mode !== "interactive") {
+            niriArgs.push("--write-to-disk", root.saveToDisk ? "true" : "false");
+        }
+
+        // Custom save path (only when saving to disk)
+        if (root.saveToDisk && root.customPath) {
             let savePath = root.customPath;
             // If path doesn't end with an image extension, treat as directory
             if (!savePath.match(/\.(png|jpe?g)$/i)) {
@@ -151,6 +157,7 @@ PluginComponent {
                             // Optimistic UI Update
                             if (key === "mode") root.mode = value;
                             if (key === "showPointer") root.showPointer = value;
+                            if (key === "saveToDisk") root.saveToDisk = value;
                             if (key === "customPath") root.customPath = value;
 
                             try {
@@ -205,6 +212,7 @@ PluginComponent {
                         // Optimistic UI Update
                         if (key === "mode") root.mode = value;
                         if (key === "showPointer") root.showPointer = value;
+                        if (key === "saveToDisk") root.saveToDisk = value;
                         if (key === "customPath") root.customPath = value;
 
                         try {

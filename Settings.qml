@@ -41,6 +41,13 @@ PluginSettings {
         description: "Include mouse pointer in the screenshot"
         defaultValue: true
     }
+
+    ToggleSetting {
+        settingKey: "saveToDisk"
+        label: "Save to Disk"
+        description: "Save screenshot to disk (only for Window/Screen modes)"
+        defaultValue: true
+    }
     
     StringSetting {
         id: customPathSetting
