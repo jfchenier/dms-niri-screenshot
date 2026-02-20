@@ -12,7 +12,7 @@ A [DMS (Dank Material Shell)](https://github.com/nicknisi/dank-material-shell) p
 - **Options**
   - **Show Pointer** — include or hide the mouse cursor in screenshots
   - **Save to Disk** — toggle whether to save the screenshot to disk or copy it directly to the clipboard (available in window and screen modes)
-  - **Custom Path** — optionally set an absolute path for saving screenshots. If left blank, it automatically detects and defaults to the `screenshot-path` set in your `~/.config/niri/config.kdl` or your XDG Pictures directory.
+  - **Custom Path** — optionally set an absolute path for saving screenshots.
 
 - **Control Center Integration** — quick access tile with a detail panel for settings
 - **Bar Widget** — compact pill for the horizontal and vertical bar
@@ -28,6 +28,12 @@ A [DMS (Dank Material Shell)](https://github.com/nicknisi/dank-material-shell) p
 ![Bar widget](assets/screenshot-bar-widget.png)
 
 ## Installation
+
+### Recommended
+
+Install this plugin directly from the **Dank Plugin Store** at [https://danklinux.com/plugins](https://danklinux.com/plugins).
+
+### Manual
 
 Copy or symlink this directory into the DMS plugins folder:
 

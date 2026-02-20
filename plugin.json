@@ -1,5 +1,5 @@
 {
-    "id": "dms-niri-screenshot",
+    "id": "niriScreenshot",
     "name": "Niri Screenshot",
     "description": "Control Niri screenshot actions from the Control Center",
     "version": "1.0.0",
