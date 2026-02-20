@@ -209,8 +209,7 @@ PluginComponent {
     popoutContent: Component {
         PopoutComponent {
             id: detailPopout
-            headerText: "Screenshot Settings"
-            detailsText: "Configure capture mode and options"
+            headerText: "Screenshot Tool"
             showCloseButton: true
             
             Column {
