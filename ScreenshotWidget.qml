@@ -36,7 +36,7 @@ PluginComponent {
     }
 
     // Control Center Widget Properties
-    ccWidgetIcon: "camera_enhance"
+    ccWidgetIcon: "screenshot_region"
     ccWidgetPrimaryText: "Screenshot"
     ccWidgetSecondaryText: _getModeText()
     ccWidgetIsActive: false // Stateless action, so always inactive/ready
@@ -153,7 +153,7 @@ PluginComponent {
                 height: 32
                 width: 110
                 text: "Capture"
-                iconName: "camera_enhance"
+                iconName: "screenshot_region"
                 onClicked: {
                     root.takeScreenshot();
                     if (PopoutService) {
@@ -210,7 +210,6 @@ PluginComponent {
         PopoutComponent {
             id: detailPopout
             headerText: "Screenshot Tool"
-            showCloseButton: true
             
             Column {
                 width: parent.width
@@ -220,7 +219,7 @@ PluginComponent {
                     text: "Capture"
                     width: parent.width
                     height: 36
-                    iconName: "camera_enhance"
+                    iconName: "screenshot_region"
                     onClicked: {
                         root.closePopout();
                         root.takeScreenshot();
@@ -261,7 +260,7 @@ PluginComponent {
         Row {
             spacing: Theme.spacingS
             DankIcon {
-                name: "camera_enhance"
+                name: "screenshot_region"
                 size: Theme.barIconSize(root.barThickness, -4)
                 color: Theme.widgetIconColor
                 anchors.verticalCenter: parent.verticalCenter
@@ -273,7 +272,7 @@ PluginComponent {
         Column {
             spacing: Theme.spacingXS
             DankIcon {
-                name: "camera_enhance"
+                name: "screenshot_region"
                 size: Theme.barIconSize(root.barThickness, -4)
                 color: Theme.widgetIconColor
                 anchors.horizontalCenter: parent.horizontalCenter
