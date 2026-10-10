@@ -2,7 +2,7 @@
     "id": "niriScreenshot",
     "name": "Niri Screenshot",
     "description": "Control Niri screenshot actions from the Control Center",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "jfchenier",
     "icon": "camera_enhance",
     "type": "widget",
@@ -23,6 +23,7 @@
     "dependencies": [
         "niri"
     ],
+    "requires_dms": ">=1.0.0",
     "screenshot": "https://raw.githubusercontent.com/jfchenier/dms-niri-screenshot/main/assets/screenshot-control-center.png",
     "permissions": [
         "process",

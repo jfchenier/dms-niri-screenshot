@@ -8,7 +8,7 @@ import QtCore
 
 PluginSettings {
     id: root
-    pluginId: "dms-niri-screenshot"
+    pluginId: "niriScreenshot"
 
     property string niriDefaultPath: ""
 

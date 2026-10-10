@@ -21,7 +21,7 @@ Column {
 
     function loadSetting(key, defaultValue) {
         if (pluginService) {
-            return pluginService.loadPluginData("dms-niri-screenshot", key, defaultValue);
+            return pluginService.loadPluginData(root.pluginId, key, defaultValue);
         }
         return defaultValue;
     }
