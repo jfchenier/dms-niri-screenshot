@@ -19,6 +19,9 @@ PluginComponent {
     property string customPath: pluginData.customPath || ""
 
     // -- Internal ----------------------------------------------------------------------
+    // Settings are stored under the manifest id. Versions <= 1.0.0 used "dms-niri-screenshot".
+    readonly property string settingsId: root.pluginId || "niriScreenshot"
+    readonly property string legacySettingsId: "dms-niri-screenshot"
     property bool isTakingScreenshot: false
     property string niriDefaultPath: ""
 
@@ -31,6 +34,20 @@ PluginComponent {
                 if (data.trim() !== "") {
                     root.niriDefaultPath = data.trim();
                 }
+            }
+        }
+    }
+
+    Component.onCompleted: migrateLegacySettings()
+
+    function migrateLegacySettings() {
+        if (typeof PluginService === "undefined" || !PluginService) return;
+        const keys = ["mode", "showPointer", "saveToDisk", "customPath"];
+        for (const key of keys) {
+            const legacyValue = PluginService.loadPluginData(root.legacySettingsId, key, undefined);
+            if (legacyValue === undefined) continue;
+            if (PluginService.loadPluginData(root.settingsId, key, undefined) === undefined) {
+                PluginService.savePluginData(root.settingsId, key, legacyValue);
             }
         }
     }
@@ -66,10 +83,10 @@ PluginComponent {
 
         // Reload settings from persistent storage to ensure we use the latest values
         if (typeof PluginService !== "undefined" && PluginService) {
-            root.mode = PluginService.loadPluginData("dms-niri-screenshot", "mode", "interactive") || "interactive";
-            root.showPointer = PluginService.loadPluginData("dms-niri-screenshot", "showPointer", true);
-            root.saveToDisk = PluginService.loadPluginData("dms-niri-screenshot", "saveToDisk", true);
-            root.customPath = PluginService.loadPluginData("dms-niri-screenshot", "customPath", "") || "";
+            root.mode = PluginService.loadPluginData(root.settingsId, "mode", "interactive") || "interactive";
+            root.showPointer = PluginService.loadPluginData(root.settingsId, "showPointer", true);
+            root.saveToDisk = PluginService.loadPluginData(root.settingsId, "saveToDisk", true);
+            root.customPath = PluginService.loadPluginData(root.settingsId, "customPath", "") || "";
         }
 
         let niriArgs = ["msg", "action"];
@@ -176,7 +193,7 @@ PluginComponent {
                         width: parent.width
                         
                         pluginService: PluginService
-                        pluginId: pluginId
+                        pluginId: root.settingsId
                         niriDefaultPath: root.niriDefaultPath
                         onSaveSetting: function(key, value) {
                             // Optimistic UI Update
@@ -187,9 +204,9 @@ PluginComponent {
 
                             try {
                                 if (typeof PluginService !== "undefined" && PluginService) {
-                                     PluginService.savePluginData("dms-niri-screenshot", key, value);
+                                     PluginService.savePluginData(root.settingsId, key, value);
                                 } else if (root.pluginService) {
-                                     root.pluginService.savePluginData("dms-niri-screenshot", key, value);
+                                     root.pluginService.savePluginData(root.settingsId, key, value);
                                 }
                             } catch (e) {
                                 console.error("ScreenshotWidget: Save error:", e);
@@ -231,7 +248,7 @@ PluginComponent {
                     width: parent.width
                     
                     pluginService: PluginService
-                    pluginId: pluginId
+                    pluginId: root.settingsId
                     niriDefaultPath: root.niriDefaultPath
                     onSaveSetting: function(key, value) {
                         // Optimistic UI Update
@@ -242,9 +259,9 @@ PluginComponent {
 
                         try {
                             if (typeof PluginService !== "undefined" && PluginService) {
-                                 PluginService.savePluginData("dms-niri-screenshot", key, value);
+                                 PluginService.savePluginData(root.settingsId, key, value);
                             } else if (root.pluginService) {
-                                 root.pluginService.savePluginData("dms-niri-screenshot", key, value);
+                                 root.pluginService.savePluginData(root.settingsId, key, value);
                             }
                         } catch (e) {
                             console.error("ScreenshotWidget: Popout save error:", e);
@@ -262,7 +279,7 @@ PluginComponent {
             spacing: Theme.spacingS
             DankIcon {
                 name: "camera_enhance"
-                size: Theme.barIconSize(root.barThickness, -4)
+                size: root.iconSize
                 color: Theme.widgetIconColor
                 anchors.verticalCenter: parent.verticalCenter
             }
@@ -274,7 +291,7 @@ PluginComponent {
             spacing: Theme.spacingXS
             DankIcon {
                 name: "camera_enhance"
-                size: Theme.barIconSize(root.barThickness, -4)
+                size: root.iconSize
                 color: Theme.widgetIconColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
